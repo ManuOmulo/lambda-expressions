@@ -1,36 +1,18 @@
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 public class Main {
+  public static void main(String[] args) {
+    List<String> list = new ArrayList<>(List.of("alpha", "beta", "charlie", "delta"));
+    list.forEach((element) -> System.out.println(element));
 
-  record Person(String firstName, String lastName) {
-    @Override
-    public String toString() {
-      return firstName + " " + lastName;
-    }
+    int result = calculator((a, b) -> a + b, 5, 2);
+    var result2 = calculator((a, b) -> a / b, 20, 2);
   }
 
-  public static void main(String[] args) {
-    List<Person> people = new ArrayList<>();
-    people.add(new Person("Emmanuel", "Omulo"));
-    people.add(new Person("Patrick", "Mahomes"));
-    people.add(new Person("Travis", "Kelce"));
-    people.add(new Person("Taylor", "Swift"));
-
-//    Using anonymous class
-    var comparatorLastName = new Comparator<Person>() {
-      @Override
-      public int compare(Person p1, Person p2) {
-        return p1.lastName.compareTo(p2.lastName);
-      }
-    };
-
-    people.sort(comparatorLastName);
-    System.out.println(people);
-
-//    Using Lambda Expression
-    people.sort((p1, p2) -> p1.firstName.compareTo(p2.firstName));
-    System.out.println(people);
+  public static <T> T calculator(Operation<T> myFunction, T value1, T value2) {
+    T result = myFunction.operate(value1, value2);
+    System.out.println("Result of operation: " + result);
+    return result;
   }
 }
